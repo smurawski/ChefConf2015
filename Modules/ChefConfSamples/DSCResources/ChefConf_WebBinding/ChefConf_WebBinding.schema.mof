@@ -1,0 +1,11 @@
+[ClassVersion("1.0.0"), FriendlyName("WebBinding")]
+Class ChefConf_WebBinding : OMI_BaseResource
+{
+    [Key]String WebsiteName;
+    [Key]UInt16 Port;
+    [Key,ValueMap{"http", "https"},Values{"http", "https"}] string Protocol;
+    [Key]String IPAddress;
+    [write]String HostName[];
+    [write]String CertificateThumbprint;
+    [write,ValueMap{"Personal", "WebHosting"},Values{"Personal", "WebHosting"}] string CertificateStoreName;
+};

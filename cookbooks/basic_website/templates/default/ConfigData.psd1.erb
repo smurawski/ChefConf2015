@@ -1,0 +1,14 @@
+@{
+  AllNodes = @(
+    @{
+      NodeName = 'localhost'
+    }
+  )
+  Sites = @(
+    <% count = 0 -%>
+    <% node['iis_demo']['sites'].each do |site_name, site_data| -%>
+    <% count += 1 -%>
+    <%= "@{name = '#{site_name}'; port = #{site_data["port"]} }" %><%=',' unless node['iis_demo']['sites'].keys.length == count %>
+    <% end -%>
+  )
+}
