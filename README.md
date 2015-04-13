@@ -2,12 +2,12 @@
 
 ## Basics
 * Server 2012 R2
-* Windows Management Framework 5 (February Preview)
-* ChefDK 0.5.0
+* [Windows Management Framework 5 - February Preview](http://www.microsoft.com/en-us/download/details.aspx?id=45883)
+* [ChefDK 0.5.0 RC](https://www.chef.io/chef/download-chefdk?p=windows&pv=2008r2&m=x86_64&v=latest&prerelease=true)
 * This repository
 
 ## Setting the stage
-* Before each of the following
+* Before each of the following (if you are on separate machines)
 ```powershell
 Find-Module ChefConfSamples | Install-Module
 
