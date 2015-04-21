@@ -1,0 +1,32 @@
+---
+driver:
+  provider: vmware_fusion
+  name: vagrant
+  vm_hostname: false # do not bother trying to change the hostname (sometimes fails)
+  communicator: winrm
+
+transport:
+  name: winrm
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: windows_2012r2_wmf5
+    driver:
+      box: ws2012r2_wmf5
+
+suites:
+  - name: dsc
+    provisioner: 
+      name: dsc
+      configuration_name: SimpleWebserver
+  - name: chef_with_powershell
+    run_list: 
+    - recipe['basic_website']
+  - name: chef_with_dsc_script
+    run_list:
+    - recipe['basic_website::dsc_script']
+  - name: chef_with_dsc_resource
+    run_list:
+    - recipe['basic_website::dsc_resource']
