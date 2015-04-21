@@ -21,6 +21,8 @@ suites:
     provisioner: 
       name: dsc
       configuration_name: SimpleWebserver
+      configuration_script: simple_webserver.ps1
+      configuration_data_variable: ConfigurationData
   - name: chef_with_powershell
     run_list: 
     - recipe['basic_website']
