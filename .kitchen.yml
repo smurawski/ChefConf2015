@@ -1,9 +1,6 @@
 ---
 driver:
-  provider: vmware_fusion
-  name: vagrant
-  vm_hostname: false # do not bother trying to change the hostname (sometimes fails)
-  communicator: winrm
+  name: hyperv
 
 transport:
   name: winrm
@@ -14,21 +11,30 @@ provisioner:
 platforms:
   - name: windows_2012r2_wmf5
     driver:
-      box: ws2012r2_wmf5
+      parent_vhd: c:/hyper-v/Windows2012R2-WMF5-Feb-Base.vhd
+      password: WalkerBlack!
 
 suites:
   - name: dsc
+    driver:
+      ip_address: 172.20.20.20
     provisioner: 
       name: dsc
       configuration_name: SimpleWebserver
       configuration_script: simple_webserver.ps1
       configuration_data_variable: ConfigurationData
   - name: chef_with_powershell
+    driver:
+      ip_address: 172.20.30.0
     run_list: 
     - recipe['basic_website']
   - name: chef_with_dsc_script
+    driver:
+        ip_address: 172.20.20.40
     run_list:
     - recipe['basic_website::dsc_script']
   - name: chef_with_dsc_resource
+    driver:
+      ip_address: 172.20.20.50
     run_list:
     - recipe['basic_website::dsc_resource']
