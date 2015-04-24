@@ -18,7 +18,7 @@ Change directories into the Website_Samples directory from the repository
 ### Running the DSC Sample
 
 ```powershell
-. .Examples/simple_webserver.ps1
+. ./Examples/simple_webserver.ps1
 SimpleWebserver -ConfigurationData $ConfigurationData
 Start-DscConfiguration -path ./SimpleWebserver -verbose -wait
 ```
