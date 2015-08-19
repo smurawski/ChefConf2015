@@ -20,6 +20,6 @@ powershell_script "Configure LCM" do
   EOH
   only_if <<-EOH
     $LCM = (Get-DscLocalConfigurationManager)
-    $LCM.ConfigurationMode -notlike "ApplyOnly"' -or $LCM.RefreshMode -notlike 'PUSH'
+    $LCM.ConfigurationMode -notlike "ApplyOnly" -or $LCM.RefreshMode -notlike 'PUSH'
   EOH
 end
