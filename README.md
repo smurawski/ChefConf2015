@@ -2,8 +2,8 @@
 
 ## Basics
 * Server 2012 R2
-* [Windows Management Framework 5 - February Preview](http://www.microsoft.com/en-us/download/details.aspx?id=45883)
-* [ChefDK 0.5.0 RC](https://www.chef.io/chef/download-chefdk?p=windows&pv=2008r2&m=x86_64&v=latest&prerelease=true)
+* [Windows Management Framework 5 - February Preview](http://www.microsoft.com/en-us/download/details.aspx?id=45883) (The April preview and Production Preview from August break Test-Kitchen).
+* [A recent ChefDK (newer than 0.6.0 ](https://downloads.chef.io/chef-dk/windows/)
 * This repository
 
 ## Setting the stage
