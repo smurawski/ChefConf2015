@@ -1,9 +1,12 @@
 ---
 driver:
   name: hyperv
+  parent_vhd_folder: 'E:/ImageFactory/Share'
+  memory_startup_bytes: 1073741824
 
 transport:
   name: winrm
+  password: P@ssw0rd
 
 provisioner:
   name: chef_zero
@@ -11,30 +14,33 @@ provisioner:
 platforms:
   - name: windows_2012r2_wmf5
     driver:
-      parent_vhd: c:/hyper-v/Windows2012R2-WMF5-Feb-Base.vhd
-      password: WalkerBlack!
+      parent_vhd_name: 'WindowsServer2012R2-wmf5.vhdx'
 
 suites:
   - name: dsc
-    driver:
-      ip_address: 172.20.20.20
-    provisioner: 
+    provisioner:
       name: dsc
       configuration_name: SimpleWebserver
       configuration_script: simple_webserver.ps1
       configuration_data_variable: ConfigurationData
+      dsc_local_configuration_manager_version: wmf5
+      dsc_local_configuration_manager:
+        action_after_reboot: 'StopConfiguration'
+        allow_module_overwrite: false
+        certificate_id: nil
+        configuration_mode: 'ApplyAndAutoCorrect'
+        configuration_mode_frequency_mins: 30
+        debug_mode: 'All'
+        reboot_if_needed: false
+        refresh_frequency_mins: 30
+        refresh_mode: 'PUSH'
+
   - name: chef_with_powershell
-    driver:
-      ip_address: 172.20.30.0
-    run_list: 
+    run_list:
     - recipe['basic_website']
   - name: chef_with_dsc_script
-    driver:
-        ip_address: 172.20.20.40
     run_list:
     - recipe['basic_website::dsc_script']
   - name: chef_with_dsc_resource
-    driver:
-      ip_address: 172.20.20.50
     run_list:
     - recipe['basic_website::dsc_resource']
