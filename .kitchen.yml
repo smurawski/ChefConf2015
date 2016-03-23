@@ -9,7 +9,7 @@ transport:
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: 12.8
+  require_chef_omnibus: 12.7
 
 platforms:
   - name: windows_2012r2_wmf4
@@ -45,12 +45,12 @@ suites:
 
   - name: chef_with_powershell
     run_list:
-    - recipe['basic_website']
+    - recipe[demo::default]
   - name: chef_with_dsc_script
     run_list:
-    - recipe['basic_website::dsc_script']
+    - recipe[demo::dsc_script]
   - name: chef_with_dsc_resource
     excludes:
       - windows_2012r2_wmf4
     run_list:
-    - recipe['basic_website::dsc_resource']
+    - recipe[demo::dsc_resource]
