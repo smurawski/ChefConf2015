@@ -5,8 +5,8 @@ dsc_resource 'Install IIS' do
   property :name,  'web-server'
 end
 
-service "w3svc" do
-  action [:enable, :start ]
+service 'w3svc' do
+  action [:enable, :start]
 end
 
 dsc_resource 'Shutdown Default Website' do
@@ -46,12 +46,12 @@ node['iis_demo']['sites'].each do |site_name, site_data|
   end
 
   template "#{site_dir}\\Default.htm" do
-    source "Default.htm.erb"
-    rights :read, "Everyone"
+    source 'Default.htm.erb'
+    rights :read, 'Everyone'
     variables(
-        :site_name => site_name,
-        :port => site_data['port']
-        )
-    notifies :restart, "service[w3svc]"
+      site_name: site_name,
+      port: site_data['port']
+    )
+    notifies :restart, 'service[w3svc]'
   end
 end

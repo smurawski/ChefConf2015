@@ -1,4 +1,4 @@
-powershell_script "Configure LCM for dsc_resource" do
+powershell_script 'Configure LCM for dsc_resource' do
   code <<-EOH
     [DscLocalConfigurationManager()]
     Configuration ConfigLCM

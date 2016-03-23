@@ -1,6 +1,5 @@
 include_recipe 'basic_website::lcm_setup_dsc_script'
 
-
 dsc_script 'Setup IIS' do
   imports 'ChefConfSamples'
   code <<-SETUPIIS
@@ -60,11 +59,11 @@ node['iis_demo']['sites'].each do |site_name, site_data|
   end
 
   template "#{site_dir}\\Default.htm" do
-      source "Default.htm.erb"
-      rights :read, "Everyone"
-      variables(
-          :site_name => site_name,
-          :port => site_data['port']
-          )
+    source 'Default.htm.erb'
+    rights :read, 'Everyone'
+    variables(
+      site_name: site_name,
+      port: site_data['port']
+    )
   end
 end

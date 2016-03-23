@@ -1,5 +1,5 @@
 
-powershell_script "Configure LCM" do
+powershell_script 'Configure LCM' do
   code <<-EOH
     Configuration ConfigLCM
     {
