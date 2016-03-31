@@ -1,0 +1,58 @@
+[ClassVersion("2.0.1"), FriendlyName("WebAppPool")]
+class ChefConf_AppPool : OMI_BaseResource
+{
+    [Key] string Name;
+    [write,ValueMap{"Present", "Absent"},Values{"Present", "Absent"}] string Ensure;
+    [write,ValueMap{"true","false"},Values{"true","false"}] string autoStart;
+    [write,ValueMap{"v4.0","v2.0",""},Values{"v4.0","v2.0",""}] string managedRuntimeVersion;
+    [write,ValueMap{"Integrated","Classic"},Values{"Integrated","Classic"}] string managedPipelineMode;
+    [write,ValueMap{"AlwaysRunning","OnDemand"},Values{"AlwaysRunning","OnDemand"}] string startMode;
+    
+    [write,ValueMap{"ApplicationPoolIdentity","LocalSystem","LocalService","NetworkService","SpecificUser"},
+    Values{"ApplicationPoolIdentity","LocalSystem","LocalService","NetworkService","SpecificUser"}]
+    string identityType;
+    
+    [write] string userName;
+    [write,EmbeddedInstance("MSFT_Credential")] string Password;
+    [write,ValueMap{"true","false"},Values{"true","false"}] string loadUserProfile;
+    [write] string queueLength;
+    [write,ValueMap{"true","false"},Values{"true","false"}] string enable32BitAppOnWin64;
+    [write] string managedRuntimeLoader;
+    [write,ValueMap{"true","false"},Values{"true","false"}] string enableConfigurationOverride;
+    [write] string CLRConfigFile;
+    [write,ValueMap{"true","false"},Values{"true","false"}] string passAnonymousToken;
+    [write,ValueMap{"LogonBatch","LogonService"},Values{"LogonBatch","LogonService"}] string logonType;
+    [write,ValueMap{"true","false"},Values{"true","false"}] string manualGroupMembership;
+    [write] string idleTimeout;
+    [write] string maxProcesses;
+    [write] string shutdownTimeLimit;
+    [write] string startupTimeLimit;
+    [write,ValueMap{"true","false"},Values{"true","false"}] string pingingEnabled;
+    [write] string pingInterval;
+    [write] string pingResponseTime;
+    [write,ValueMap{"true","false"},Values{"true","false"}] string disallowOverlappingRotation;
+    [write,ValueMap{"true","false"},Values{"true","false"}] string disallowRotationOnConfigChange;
+    [write] string logEventOnRecycle;
+    [write] string restartMemoryLimit;
+    [write] string restartPrivateMemoryLimit;
+    [write] string restartRequestsLimit;
+    [write] string restartTimeLimit;
+    [write] string restartSchedule[];
+    [write,ValueMap{"HttpLevel","TcpLevel"},Values{"HttpLevel","TcpLevel"}] string loadBalancerCapabilities;
+    [write,ValueMap{"true","false"},Values{"true","false"}] string orphanWorkerProcess;
+    [write] string orphanActionExe;
+    [write] string orphanActionParams;
+    [write,ValueMap{"true","false"},Values{"true","false"}] string rapidFailProtection;
+    [write] string rapidFailProtectionInterval;
+    [write] string rapidFailProtectionMaxCrashes;
+    [write] string autoShutdownExe;
+    [write] string autoShutdownParams;
+    [write] string cpuLimit;
+    [write,ValueMap{"NoAction","KillW3wp","Throttle","ThrottleUnderLoad"},Values{"NoAction","KillW3wp","Throttle","ThrottleUnderLoad"}] string cpuAction;
+    [write] string cpuResetInterval;
+    [write,ValueMap{"true","false"},Values{"true","false"}] string cpuSmpAffinitized;
+    [write] string cpuSmpProcessorAffinityMask;
+    [write] string cpuSmpProcessorAffinityMask2;
+        
+}; 
+

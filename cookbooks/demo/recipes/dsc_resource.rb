@@ -1,4 +1,12 @@
-include_recipe 'basic_website::lcm_setup_dsc_resource'
+include_recipe 'demo::lcm_setup_dsc_resource'
+
+directory "#{ENV['ProgramW6432']}/WindowsPowerShell/Modules/ChefConfSamples"
+
+remote_directory "#{ENV['ProgramW6432']}/WindowsPowerShell/Modules/ChefConfSamples" do
+  source 'ChefConfSamples'
+  action :create
+end
+
 
 dsc_resource 'Install IIS' do
   resource :windowsfeature
@@ -21,6 +29,7 @@ node['iis_demo']['sites'].each do |site_name, site_data|
 
   dsc_resource "#{site_name} Directory" do
     resource :file
+    module_name 'PSDesiredStateConfiguration'
     property :DestinationPath, site_dir
     property :Type, 'Directory'
   end
