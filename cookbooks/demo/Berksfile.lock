@@ -1,0 +1,11 @@
+DEPENDENCIES
+  demo
+    path: .
+    metadata: true
+
+GRAPH
+  compat_resource (12.9.1)
+  demo (0.1.0)
+    dsc_contrib (>= 0.4.0)
+  dsc_contrib (0.4.1)
+    compat_resource (>= 12.5)

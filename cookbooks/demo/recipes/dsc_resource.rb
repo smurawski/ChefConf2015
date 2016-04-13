@@ -1,12 +1,5 @@
 include_recipe 'demo::lcm_setup_dsc_resource'
-
-directory "#{ENV['ProgramW6432']}/WindowsPowerShell/Modules/ChefConfSamples"
-
-remote_directory "#{ENV['ProgramW6432']}/WindowsPowerShell/Modules/ChefConfSamples" do
-  source 'ChefConfSamples'
-  action :create
-end
-
+include_recipe 'demo::x_web_administration'
 
 dsc_resource 'Install IIS' do
   resource :windowsfeature
@@ -18,7 +11,7 @@ service 'w3svc' do
 end
 
 dsc_resource 'Shutdown Default Website' do
-  resource :website
+  resource :xwebsite
   property :name, 'Default Web Site'
   property :State, 'Stopped'
   property :PhysicalPath, 'C:\inetpub\wwwroot'
@@ -35,23 +28,20 @@ node['iis_demo']['sites'].each do |site_name, site_data|
   end
 
   dsc_resource "#{site_name} App Pool" do
-    resource :WebAppPool
+    resource :xWebAppPool
     property :Name, site_name
   end
 
   dsc_resource "#{site_name} Web Site" do
-    resource :WebSite
+    resource :xWebSite
     property :Name, site_name
     property :ApplicationPool, site_name
     property :PhysicalPath, site_dir
-  end
-
-  dsc_resource "#{site_name} Binding" do
-    resource :webbinding
-    property :websitename, site_name
-    property :port, site_data['port']
-    property :protocol, 'http'
-    property :ipaddress, '*'
+    property :BindingInfo, cim_instance_array(
+      'MSFT_xWebBindingInformation',
+      ipaddress: '*',
+      protocol: 'http',
+      port: site_data['port'])
   end
 
   template "#{site_dir}\\Default.htm" do

@@ -1,7 +1,8 @@
-include_recipe 'basic_website::lcm_setup_dsc_script'
+include_recipe 'demo::lcm_setup_dsc_script'
+include_recipe 'demo::x_web_administration'
 
 dsc_script 'Setup IIS' do
-  imports 'ChefConfSamples'
+  imports 'xWebAdministration'
   code <<-SETUPIIS
     windowsfeature 'iis'
     {
@@ -16,7 +17,7 @@ dsc_script 'Setup IIS' do
       DependsOn = '[windowsfeature]iis'
     }
 
-    WebSite 'Shutdown Default Website'
+    xWebSite 'Shutdown Default Website'
     {
       Name = 'Default Web Site'
       State = 'Stopped'
@@ -29,7 +30,7 @@ end
 node['iis_demo']['sites'].each do |site_name, site_data|
   site_dir = "#{ENV['SYSTEMDRIVE']}\\inetpub\\wwwroot\\#{site_name}"
   dsc_script "Configure Site #{site_name}" do
-    imports 'ChefConfSamples'
+    imports 'xWebAdministration'
     code <<-SITESDSC
       $SiteDir = '#{site_dir}'
       file "#{site_name}Directory"
@@ -37,23 +38,21 @@ node['iis_demo']['sites'].each do |site_name, site_data|
         DestinationPath = $SiteDir
         Type = 'Directory'
       }
-      WebAppPool "#{site_name}AppPool"
+      xWebAppPool "#{site_name}AppPool"
       {
         Name = "#{site_name}"
       }
-      WebSite "#{site_name}WebSite"
+      xWebSite "#{site_name}WebSite"
       {
         Name = '#{site_name}'
         ApplicationPool = "#{site_name}"
         PhysicalPath = $SiteDir
-        DependsOn = '[WebAppPool]#{site_name}AppPool', '[file]#{site_name}Directory'
-      }
-      WebBinding "#{site_name}Binding"
-      {
-        WebsiteName = '#{site_name}'
-        IPAddress = '*'
-        Port = #{site_data['port']}
-        Protocol = 'http'
+        DependsOn = '[file]#{site_name}Directory'
+        BindingInfo = MSFT_xWebBindingInformation {
+                        IPAddress = '*'
+                        Port = #{site_data['port']}
+                        Protocol = 'http' 
+                      }
       }
     SITESDSC
   end

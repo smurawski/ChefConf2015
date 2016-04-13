@@ -9,7 +9,6 @@ transport:
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: 12.7
 
 platforms:
   - name: windows_2012r2_wmf4

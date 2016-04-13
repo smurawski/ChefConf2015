@@ -1,0 +1,27 @@
+---
+driver:
+  name: azurerm
+  subscription_id: <%= ENV['AZURE_SUBSCRIPTION_ID'] %>
+  location: 'Central US'
+  machine_size: 'Standard_A2'
+
+platforms:
+  - name: windows_2012r2_wmf4
+    driver:
+      image_urn: MicrosoftWindowsServer:WindowsServer:2012-R2-DataCenter:latest
+  - name: windows_tp4_wmf5
+    driver:
+      image_urn: MicrosoftWindowsServer:WindowsServer:Windows-Server-Technical-Preview:latest
+
+suites:
+  - name: chef_with_powershell
+    run_list:
+    - recipe[demo::default]
+    excludes:
+      - windows_tp4_wmf5
+
+  - name: chef_with_dsc_resource
+    excludes:
+      - windows_2012r2_wmf4
+    run_list:
+    - recipe[demo::dsc_resource]
